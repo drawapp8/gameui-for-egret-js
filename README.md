@@ -3,11 +3,11 @@ This project is a Game UI for egret-js library, it is an adapter between [egret.
 Online Demos
 --------------------
 
-* [Demo1](http://gameui.duapp.com/egretjs/demo1/)
+* [Demo1](http://gameui.duapp.com/egretjs/demo1/launcher/index.html)
 
-* [Demo2](http://gameui.duapp.com/egretjs/demo2/)
+* [Demo2](http://gameui.duapp.com/egretjs/demo2/launcher/index.html)
 
-* [Demo3](http://gameui.duapp.com/egretjs/demo3/)
+* [Demo3](http://gameui.duapp.com/egretjs/demo3/launcher/index.html)
 
 Documentation
 --------------------
