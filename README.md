@@ -2,12 +2,13 @@ This project is a Game UI for egret.js game engine, it is an adapter between [eg
 
 特性
 --------------------
-1. 自动适配不同分辨率的设备。
-2. 自动适配不同屏幕密度的设备。
-3. 功能强大，支持全部常用控件。
-4. 分离控件的功能和外观，方便实现不同的游戏风格。
-5. 简单易用，使用gamebuilder工具，不需要为UI写一行代码。
-6. 开源全部代码，商业和非商业应用都可免费使用(LGPL)。
+1. 无缝集成到egret游戏引擎。
+2. 自动适配不同分辨率的设备。
+3. 自动适配不同屏幕密度的设备。
+4. 功能强大，支持全部常用控件。
+5. 分离控件的功能和外观，方便实现不同的游戏风格。
+6. 简单易用，使用gamebuilder工具，不需要为UI写一行代码。
+7. 开源全部代码，商业和非商业应用都可免费使用(LGPL)。
 
 在线演示
 --------------------
@@ -31,4 +32,3 @@ This project is a Game UI for egret.js game engine, it is an adapter between [eg
 --------------------
 
 [Game Builder](http://gamebuilder.duapp.com/appedit.php) is an online Game UI Builder.
-
