@@ -98,8 +98,10 @@ var GameApp = (function (_super) {
         icon.y = 0;
         this.addChild(icon);
       	
-      	openWindow("win-main", 0, 0, stageW, stageH); 
+      	//openWindow("win-main", 0, 0, stageW, stageH); 
        	
+       	loadScene("win-main");
+
        	return;
     };
     

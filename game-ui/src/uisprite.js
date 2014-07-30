@@ -1,3 +1,11 @@
+/*
+ * File: uisprite.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: wrap cantk widget as a sprite in game engine.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
 
 GameUI.createUISprite = function(cantkWidget, x, y, width, height, onClose, initData) {
 	var canvas = document.createElement('canvas');

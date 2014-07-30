@@ -1,3 +1,12 @@
+/*
+ * File: cantk-override.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: override some functions of cantk.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
+
 CanTK.UIElement.prototype.openWindow = function(name, onWindowClose, closeCurrent, initData) {
 	var x;
 	var y;

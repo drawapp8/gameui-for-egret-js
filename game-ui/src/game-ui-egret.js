@@ -1,9 +1,20 @@
 (function(){
+/*
+ * File: main.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: GameUI main API 
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
+
 GameUI = function() {
 
 };
 
-GameUI.preloadAssetsInUIData = function(uiData) {
+GameUI.windows = [];
+
+GameUI.preloadAssetsInUIData = function(uiData, onLoadingProgress) {
 	var images = [];
 	var wm = findWindowManager(uiData);
 
@@ -18,7 +29,7 @@ GameUI.preloadAssetsInUIData = function(uiData) {
 	});
 
 	Adapter.init();
-	Adapter.loadAssets(images);
+	Adapter.loadAssets(images, onLoadingProgress);
 
 	return images;
 }
@@ -26,10 +37,10 @@ GameUI.preloadAssetsInUIData = function(uiData) {
 GameUI.init = function(game, stage, uiData, view) {
 	var wm = findWindowManager(uiData);
 
+	GameUI.view = view;
 	GameUI.game = game;
 	GameUI.stage = stage;
 	GameUI.uiData = uiData;
-	GameUI.view = view;
 	GameUI.viewWidth = view.width;
 	GameUI.viewHeight = view.height;
 
@@ -55,8 +66,6 @@ GameUI.setStage = function(stage) {
 
 	return;
 }
-
-GameUI.windows = [];
 
 GameUI.openWindow = function(windowName, x, y, width, height, onWindowClose, initData) {
 	var cantkWidget = lookUpWidget(GameUI.rootWidget, windowName);
@@ -225,32 +234,91 @@ GameUI.getHTMLElementPosition = function (element) {
             width: box.width,
             height: box.height
         };
-    };
+};
+/*
+ * File: adapter-egret.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: adapter for egret game engine. 
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
+
 var Adapter = {};
 
 Adapter.init = function() {
-	Adapter.loadAssets = function(srcs) {
-		/*TODO*/
+	Adapter.loadAssets = function(srcs, onLoadingProgress) {
+		var loaded = 0;
+		var n = srcs.length;
+
+		if(!srcs.length || !onLoadingProgress) {
+			return srcs;
+		}
+
+		function onLoadOne () {
+			loaded++;
+			onLoadingProgress(loaded, n);
+
+			return;
+		}
+
+		for(var i = 0; i < n; i++) {
+			var src = srcs[i];
+			var image = new Image();
+			image.onload = function() {
+				onLoadOne();
+				
+				console.log("Load Success: " + src);
+			}
+
+			image.onerror = function(e) {
+				onLoadOne();
+
+				console.log("Load Failed: " + src);
+			}
+
+			image.src = src;
+		}
+
 		return;
 	}
 	
 	Adapter.createTextureFromCanvas = function(canvas) {
-		/*TODO*/
-		return canvas;
+		var texture = new egret.Texture();
+
+		texture._setBitmapData(canvas);
+
+		return texture;
 	}
 
 	Adapter.createSpriteFromImage = function(src, x, y, w, h) {
-		/*TODO*/
+		var sprite =  new egret.Bitmap();	
+	
+		sprite.texture = Adapter.createTextureFromImage(src);
+
+		sprite.x = x;
+		sprite.y = y;
+		sprite.width = w;
+		sprite.height = h;
+
 		return sprite;
 	}
 	
 	Adapter.createTextureFromImage = function (src) {
-		/*TODO*/
-		return image;
+		var texture = new egret.Texture();
+
+		var image = new Image();
+		
+		image.onload = function() {
+			texture._setBitmapData(image);
+		}
+		image.src = src;
+
+		return texture;
 	}
 	
 	Adapter.setTexture = function(sprite, texture) {
-		/*TODO*/
+		sprite.texture = texture;
 
 		return;
 	}
@@ -488,6 +556,14 @@ Adapter.init = function() {
 	}
 };
 
+/*
+ * File: animation.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: window open/close animation.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
 
 GameUI.Animation = function(sprite) {
 	this.duration = 400;
@@ -743,6 +819,15 @@ GameUI.Animation.createDefaultWindowCloseAnimation = function(widget) {
 	return animation;
 }
 
+/*
+ * File: cantk-override.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: override some functions of cantk.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
+
 CanTK.UIElement.prototype.openWindow = function(name, onWindowClose, closeCurrent, initData) {
 	var x;
 	var y;
@@ -835,6 +920,14 @@ CanTK.UIElement.prototype.saveState = function() {
 	return;
 };
 
+/*
+ * File: uisprite.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: wrap cantk widget as a sprite in game engine.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
 
 GameUI.createUISprite = function(cantkWidget, x, y, width, height, onClose, initData) {
 	var canvas = document.createElement('canvas');

@@ -1,3 +1,11 @@
+/*
+ * File: animation.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: window open/close animation.
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
 
 GameUI.Animation = function(sprite) {
 	this.duration = 400;

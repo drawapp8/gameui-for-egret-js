@@ -1,28 +1,87 @@
+/*
+ * File: adapter-egret.js
+ * Author:  Li XianJing <xianjimli@hotmail.com>
+ * Brief: adapter for egret game engine. 
+ * 
+ * Copyright (c) 2014  Li XianJing <xianjimli@hotmail.com>
+ * 
+ */
+
 var Adapter = {};
 
 Adapter.init = function() {
-	Adapter.loadAssets = function(srcs) {
-		/*TODO*/
+	Adapter.loadAssets = function(srcs, onLoadingProgress) {
+		var loaded = 0;
+		var n = srcs.length;
+
+		if(!srcs.length || !onLoadingProgress) {
+			return srcs;
+		}
+
+		function onLoadOne () {
+			loaded++;
+			onLoadingProgress(loaded, n);
+
+			return;
+		}
+
+		for(var i = 0; i < n; i++) {
+			var src = srcs[i];
+			var image = new Image();
+			image.onload = function() {
+				onLoadOne();
+				
+				console.log("Load Success: " + src);
+			}
+
+			image.onerror = function(e) {
+				onLoadOne();
+
+				console.log("Load Failed: " + src);
+			}
+
+			image.src = src;
+		}
+
 		return;
 	}
 	
 	Adapter.createTextureFromCanvas = function(canvas) {
-		/*TODO*/
-		return canvas;
+		var texture = new egret.Texture();
+
+		texture._setBitmapData(canvas);
+
+		return texture;
 	}
 
 	Adapter.createSpriteFromImage = function(src, x, y, w, h) {
-		/*TODO*/
+		var sprite =  new egret.Bitmap();	
+	
+		sprite.texture = Adapter.createTextureFromImage(src);
+
+		sprite.x = x;
+		sprite.y = y;
+		sprite.width = w;
+		sprite.height = h;
+
 		return sprite;
 	}
 	
 	Adapter.createTextureFromImage = function (src) {
-		/*TODO*/
-		return image;
+		var texture = new egret.Texture();
+
+		var image = new Image();
+		
+		image.onload = function() {
+			texture._setBitmapData(image);
+		}
+		image.src = src;
+
+		return texture;
 	}
 	
 	Adapter.setTexture = function(sprite, texture) {
-		/*TODO*/
+		sprite.texture = texture;
 
 		return;
 	}

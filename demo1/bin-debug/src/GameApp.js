@@ -57,19 +57,31 @@ var GameApp = (function (_super) {
     };
 
     /**
-    * preload资源组加载完成
+    * preload资源组加载完成, Then load the UI Resouces.
     */
     GameApp.prototype.onResourceLoadComplete = function (event) {
-        if (event.groupName == "preload") {
-            this.stage.removeChild(this.loadingView);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+		RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+		RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
 
-			var view = document.getElementById("gameCanvas");
-            GameUI.init(this, this.stage, guiData, view);
+		var self = this;
+		GameUI.preloadAssetsInUIData(guiData, function onLoadingProgress(loaded, total) {
+            self.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
 
-            this.createGameScene();
-        }
+            if(loaded === total) {
+            	self.onAllResourceLoadComplete();
+            }
+		});
+    }
+
+	/**
+	 * All Resource loaded, start the game
+	 */
+    GameApp.prototype.onAllResourceLoadComplete = function () {
+		this.stage.removeChild(this.loadingView);
+		var view = document.getElementById("gameCanvas");
+		GameUI.init(this, this.stage, guiData, view);
+
+		this.createGameScene();
     };
 
     /**
