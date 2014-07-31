@@ -21,6 +21,8 @@ This project is a Game UI for egret.js game engine, it is an adapter between [eg
 
 文档
 --------------------
+### [集成到egret项目](https://github.com/drawapp8/gameui-for-egret-js/wiki/%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90%E5%88%B0egret%E9%A1%B9%E7%9B%AE%EF%BC%9F)
+
 ### [快速上手](https://github.com/drawapp8/gameui-for-egret-js/wiki/GetStarted)
 
 ### [编程接口](https://github.com/drawapp8/gameui-common/wiki/GameUI-Programming-Interface)
