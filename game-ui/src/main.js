@@ -137,6 +137,16 @@ function foreachAsset (element, onAsset) {
 		}
 	}
 
+	var resourceNames = ["textureJsonURL", "textureURL", "skeletonJsonURL", "soundURL"];
+	for(var i = 0; i < resourceNames.length; i++) {
+		var name = resourceNames[i];
+		var src = element[name];
+		if(src) {
+			var newSrc = onAsset(src);
+			element[name] = newSrc;
+		}
+	}
+                
 	if(element.children) {
 		for(var i = 0; i < element.children.length; i++) {
 			foreachAsset(element.children[i], onAsset);
