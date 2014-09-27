@@ -33,4 +33,4 @@ This project is a Game UI for egret.js game engine, it is an adapter between [eg
 在线UI编辑器
 --------------------
 
-[Game Builder](http://gamebuilder.duapp.com/appedit.php) is an online Game UI Builder.
+[Game Builder](http://gamebuilder.duapp.com/) is an online Game UI Builder.
